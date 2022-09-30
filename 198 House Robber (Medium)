@@ -1,0 +1,19 @@
+class Solution(object):
+    def robs(self, nums, index):
+        if (self.arr[index] != None):
+            return self.arr[index]
+        if (index == 0):
+            return nums[index]
+        elif (index == 1):
+            return max(nums[index], nums[index-1])
+        else:
+            self.arr[index] = max(nums[index]+self.robs(nums, index-2), self.robs(nums,index-1))
+            return self.arr[index]
+
+    def rob(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        self.arr = [None]*(len(nums)+1)
+        return self.robs(nums, len(nums)-1)
