@@ -1,0 +1,32 @@
+from collections import deque
+class Solution(object):
+    def combinationSum(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        self.outputs = []
+        self.stack = deque()
+        self.stack.append([])
+        self.output(candidates, target, 0)
+        return self.outputs
+
+    def output(self, candidates, target, index):
+        lst = self.stack.pop()
+        if (target == 0):
+            if lst not in self.outputs:
+                self.outputs.append(lst[:])
+        elif (index == len(candidates)):
+            return
+        elif (target < candidates[index]):
+            self.stack.append(lst[:])
+            self.output(candidates, target, index+1)
+        else:
+            self.stack.append(lst[:])
+            self.output(candidates, target, index+1)
+            temp1 = lst[:]
+            temp1.append(candidates[index])
+            self.stack.append(temp1[:])
+            self.output(candidates, target-candidates[index], index)
+            
